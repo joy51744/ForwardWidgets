@@ -1,6 +1,6 @@
 {
   "title": "Joy's Widgets",
-  "description": "Douban network Widgets",
+  "description": "IMDB想看 Widgets",
   "icon": "https://assets.vvebo.vip/scripts/icon.png",
   "widgets": [
     {
@@ -8,9 +8,9 @@
       "title": "Trakt我看&Trakt个性化推荐",
       "description": "解析Trakt想看、在看、已看、片单、追剧日历以及根据个人数据生成的个性化推荐【五折码：CHEAP.5;七折码：CHEAP】",
       "requiredVersion": "0.0.1",
-      "version": "1.0.11",
+      "version": "1.0.0",
       "author": "Joy",
-      "url": "https://raw.githubusercontent.com/joy51744/ForwardWidgets/refs/heads/main/widget/traktwatchlist.js"
+      "url": "https://raw.githubusercontent.com/joy51744/ForwardWidgets/refs/heads/main/widget/IMDB_watchlist.js"
     }
   ]
 }
