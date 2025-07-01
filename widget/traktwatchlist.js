@@ -34,7 +34,7 @@ WidgetMetadata = {
         {
           name: "region",
           title: "地区",
-          type: "enumeration",
+          type: "countries",
           enumOptions: [
             { title: "全部", value: "" },
             { title: "日本", value: "JP" },
