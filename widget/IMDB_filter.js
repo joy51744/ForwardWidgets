@@ -24,12 +24,6 @@ const WidgetMetadata = {
           title: "页码",
           type: "page",
         },
-        {
-          name: "region",
-          title: "地区筛选",
-          type: "input",
-          description: "可选，填写国家英文名，如 Japan、South Korea、United States",
-        },
       ],
     },
   ],
@@ -88,38 +82,6 @@ async function loadImdbWatchlist(params = {}) {
         id,
         type: "imdb",
       }));
-    }
-
-    // 筛选地区，逐条请求详情页
-    const filteredIds = [];
-
-    for (const id of imdbIds) {
-      try {
-        const detailUrl = `https://www.imdb.com/title/${id}/`;
-        const detailResponse = await Widget.http.get(detailUrl, {
-          headers: {
-            "User-Agent":
-              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-            "Cache-Control": "no-cache",
-            "Pragma": "no-cache",
-            "Expires": "0",
-          },
-        });
-        const detailDoc = Widget.dom.parse(detailResponse.data);
-
-        // 获取国家地区信息，IMDb页面中有带country_of_origin参数的链接
-        const countryElements = Widget.dom.select(detailDoc, 'a[href^="/search/title?country_of_origin="]');
-        const countries = countryElements.map((el) => el.textContent.trim());
-
-        const matched = countries.some((c) => c.toLowerCase() === regionFilter.toLowerCase());
-
-        if (matched) {
-          filteredIds.push(id);
-        }
-      } catch (e) {
-        // 单条详情请求失败，跳过
-        continue;
-      }
     }
 
     return filteredIds.map((id) => ({
