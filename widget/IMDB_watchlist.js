@@ -1,95 +1,80 @@
-// forward.imdb 组件
-const WidgetMetadata = {
-  id: "forward.imdb",
-  title: "IMDb",
+WidgetMetadata = {
+  id: "IMDbWatchlist",
+  title: "IMDb Watchlist",
   version: "1.0.0",
   requiredVersion: "0.0.1",
-  description: "IMDb 想看清单抓取（无需 API Key）",
-  author: "Forward",
-  site: "https://github.com/ForwardWidgets",
+  description: "通过抓取 IMDb 用户 Watchlist 页面解析 IMDb ID，无需 API Key",
+  author: "huangxd",
+  site: "https://github.com/joy51744/ForwardWidgets",
   modules: [
     {
-      id: "imdb_watchlist",
-      title: "IMDb 想看清单",
+      title: "IMDb想看片單",
       requiresWebView: false,
-      functionName: "loadIMDbWatchlist",
+      functionName: "loadImdbWatchlist",
       cacheDuration: 3600,
       params: [
         {
-          name: "watchlist_id",
-          title: "IMDb 片单 ID",
+          name: "user_id",
+          title: "IMDb用户ID",
           type: "input",
-          description: "如 ls076305441，可从 imdb.com/list/lsXXXXXXX/ 中取得",
+          description: "例如：ur204635540，可从 IMDb 个人主页地址中获取",
         },
         {
           name: "page",
           title: "页码",
-          type: "page",
-        },
-        {
-          name: "random",
-          title: "随机模式",
-          type: "boolean",
+          type: "page"
         },
       ],
-    },
+    }
   ],
 };
-
-async function loadIMDbWatchlist(params = {}) {
+async function loadImdbWatchlist(params = {}) {
   try {
-    const listId = params.watchlist_id || "";
+    const userId = params.user_id;
     const page = params.page || 1;
-    const random = params.random || false;
+    const count = 20;
+    const minNum = (page - 1) * count + 1;
+    const maxNum = page * count;
 
-    if (!listId) {
-      throw new Error("必须提供 IMDb Watchlist ID");
+    if (!userId) {
+      throw new Error("必须提供 IMDb 用户 ID");
     }
 
-    const url = `https://www.imdb.com/list/${listId}/?page=${page}`;
+    const url = `https://www.imdb.com/user/${userId}/watchlist`;
+
     const response = await Widget.http.get(url, {
       headers: {
         "User-Agent":
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36",
-        "Accept-Language": "en-US,en;q=0.9",
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
       },
     });
 
     const docId = Widget.dom.parse(response.data);
-    const elements = Widget.dom.select(docId, '[data-testid="grid-layout"] a.ipc-title-link-wrapper');
+    const scriptTags = Widget.dom.select(docId, 'script');
 
-    const imdbIds = Array.from(
-      new Set(
-        elements
-          .map((el) => Widget.dom.attr(el, "href"))
-          .filter(Boolean)
-          .map((href) => {
-            const match = href.match(/\/title\/(tt\d+)/);
-            return match ? match[1] : null;
-          })
-          .filter(Boolean)
-      )
-    );
+    let imdbIds = [];
 
-    const finalList = random
-      ? shuffleArray(imdbIds).slice(0, 9)
-      : imdbIds;
+    for (let script of scriptTags) {
+      const text = Widget.dom.text(script);
+      if (text.includes("IMDbReactInitialState")) {
+        const jsonStr = text.match(/IMDbReactInitialState.push\((\{.+?\})\);/);
+        if (jsonStr && jsonStr[1]) {
+          const data = JSON.parse(jsonStr[1]);
+          const list = data?.list?.listItems || [];
+          imdbIds = list.map(item => item.const).filter(Boolean);
+          break;
+        }
+      }
+    }
 
-    return finalList.map((id) => ({
+    // 分页裁剪
+    const pageItems = imdbIds.slice(minNum - 1, maxNum);
+    return pageItems.map(id => ({
       id,
-      type: "imdb",
+      type: "imdb"
     }));
-  } catch (e) {
-    console.error("IMDb Watchlist 加载失败:", e);
-    throw e;
+  } catch (error) {
+    console.error("IMDb Watchlist 解析失败:", error);
+    throw error;
   }
-}
-
-function shuffleArray(array) {
-  const arr = [...array];
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
 }
