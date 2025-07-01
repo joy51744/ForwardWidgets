@@ -1,35 +1,25 @@
 {
-  {
-  "title": "Joy's Widgets",
-  "description": "IMDB想看 Widgets",
+  "title": "huangxd's Widgets",
+  "description": "IMDB by Joy",
   "icon": "https://assets.vvebo.vip/scripts/icon.png",
   "widgets": [
     {
-      "id": "trakt",
-      "title": "Trakt我看&Trakt个性化推荐",
-      "description": "解析Trakt想看、在看、已看、片单、追剧日历以及根据个人数据生成的个性化推荐【五折码：CHEAP.5;七折码：CHEAP】",
+      "id": "IMDbWatchlist",
+      "title": "IMDb想看清單",
+      "description": "解析IMDb想看清單",
       "requiredVersion": "0.0.1",
       "version": "1.0.0",
       "author": "Joy",
-      "url": "https://raw.githubusercontent.com/joy51744/ForwardWidgets/refs/heads/main/widget/IMDB_watchlist.js"
-    }
-  ]
-  },
-
-  {
-  "title": "Joy's Widgets",
-  "description": "IMDB想看 Widgets",
-  "icon": "https://assets.vvebo.vip/scripts/icon.png",
-  "widgets": [
+      "url": "https://raw.githubusercontent.com/joy51744/ForwardWidgets/refs/heads/main/widget/IMDB_Watchlist.js"
+    },
     {
-      "id": "trakt",
-      "title": "Trakt我看&Trakt个性化推荐",
-      "description": "解析Trakt想看、在看、已看、片单、追剧日历以及根据个人数据生成的个性化推荐【五折码：CHEAP.5;七折码：CHEAP】",
+      "id": "IMDbfilter",
+      "title": "IMDb想看清單+篩選",
+      "description": "IMDb想看清單+篩選",
       "requiredVersion": "0.0.1",
       "version": "1.0.0",
       "author": "Joy",
       "url": "https://raw.githubusercontent.com/joy51744/ForwardWidgets/refs/heads/main/widget/IMDB_filter.js"
-    }
+    },
   ]
-  }
 }
