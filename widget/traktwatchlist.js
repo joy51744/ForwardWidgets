@@ -1,4 +1,4 @@
-WidgetMetadata = {
+const WidgetMetadata = {
   id: "Trakt",
   title: "Trakt我看&Trakt个性化推荐",
   version: "1.0.12",
@@ -55,9 +55,9 @@ WidgetMetadata = {
 
 // 区域网络ID映射（TMDb Network ID）
 const networkRegionMap = {
-  JP: [2716, 2440, 328, 291, 233, 2077,37,4627], // NHK, Fuji TV, NTV, TBS, TV Tokyo, WOWOW,TV Asahi,BS Fuji
-  KR: [4430, 147, 2148,79, 98, 4344, 1748, 129506,1934,3843], // tvN, KBS2, KBS1,SBS, MBC, JTBC, ENA, OCN,Channel A,TV Chosun
-  US: [2, 7, 9, 13, 14, 16, 21, 1024,174,213,88,71,67,318,30,4324,2076,2552,453,1024,2739,387,68,14], // NBC, ABC, CBS, FOX,AMC,Netflix,FX,The CW,Showtime,Starz,USA Network,Peacock,Paramount+,Apple TV+,Hulu,Amazon Prime Video,Disney+,HBO Max,TBS,PBS
+  JP: [2716, 2440, 328, 291, 233, 2077], // NHK, Fuji TV, NTV, TBS, TV Tokyo, WOWOW
+  KR: [4430, 147, 79, 98, 4344, 174, 129506], // tvN, KBS2, SBS, MBC, JTBC, ENA, OCN
+  US: [2, 7, 9, 13, 14, 16, 21, 1024], // NBC, ABC, CBS, FOX...
 };
 
 // TMDb 网页抓取 Network ID（无需 API Key）
