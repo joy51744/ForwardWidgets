@@ -5,9 +5,9 @@ const WidgetMetadata = {
   title: "Trakt我看&Trakt个性化推荐+日剧平台筛选",
   version: "1.0.13",
   requiredVersion: "0.0.1",
-  description: "解析Trakt想看、在看、已看、片单、追剧日历、个性化推荐，并支持日剧播放平台筛选（基于 TMDB Network ID）",
-  author: "huangxd + Forward",
-  site: "https://github.com/huangxd-/ForwardWidgets",
+  description: "Trakt解析想看、在看、已看、片单、追剧日历、个性化推荐，并支持日剧播放平台筛选（基于 TMDB Network ID）",
+  author: "Joy + ChatGPT",
+  site: "https://github.com/joy51744/ForwardWidgets",
   modules: [
     {
       title: "trakt我看",
