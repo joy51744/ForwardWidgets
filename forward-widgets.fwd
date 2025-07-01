@@ -1,13 +1,13 @@
 {
   "title": "Joy's Widgets",
-  "description": "TMDB network Widgets",
-  "icon": "https://github.com/joy51744/ForwardWidgets/blob/main/icon.png",
+  "description": "Douban network Widgets",
+  "icon": "https://assets.vvebo.vip/scripts/icon.png",
   "widgets": [
     {
-      "id": "forward.tmdb",
-      "title": "TMDB",
-      "description": "获取 TMDB 的榜单数据",
-      "requiredVersion": "0.0.1",
+      "id": "forward.traktwatchlist",
+      "title": "Trakt watchlist + 地區/播放平台/年份筛选",
+      "description": "Trakt watchlist透過tmdb進行篩選",
+      "requiredVersion": "1.1.0",
       "version": "1.0.0",
       "author": "Joy",
       "url": "https://github.com/joy51744/ForwardWidgets/blob/main/widget/tmdbnetwork.js"
