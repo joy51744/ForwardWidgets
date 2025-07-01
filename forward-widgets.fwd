@@ -1,7 +1,7 @@
 {
-  "title": "Forward Widgets",
-  "description": "Forward Official Widgets",
-  "icon": "https://assets.vvebo.vip/scripts/icon.png",
+  "title": "Joy's Widgets",
+  "description": "TMDB network Widgets",
+  "icon": "https://github.com/joy51744/ForwardWidgets/blob/main/icon.png",
   "widgets": [
     {
       "id": "forward.tmdb",
@@ -9,8 +9,8 @@
       "description": "获取 TMDB 的榜单数据",
       "requiredVersion": "0.0.1",
       "version": "1.0.0",
-      "author": "Forward",
-      "url": "https://assets.vvebo.vip/scripts/tmdb.js"
+      "author": "Joy",
+      "url": "https://github.com/joy51744/ForwardWidgets/blob/main/widget/tmdbnetwork.js"
     }
   ]
 }
