@@ -1,555 +1,258 @@
-WidgetMetadata = {
-  id: "forward.tmdb",
-  title: "TMDB",
-  version: "1.0.1",
+const JAPAN_NETWORKS = [2716, 2440, 328, 291, 233, 318, 235, 2405];
+const KOREA_NETWORKS = [3562, 3351, 1749, 3771, 1246, 3353, 3206, 5262, 213];
+const US_NETWORKS = [
+  213, 8, 9, 14, 49, 67, 28, 50, 2, 69, 85, 1024, 97
+];
+
+const WidgetMetadata = {
+  id: "forward.traktWithNetworkFilterYear",
+  title: "Trakt我看 + 播放平台筛选 + 年份筛选（日/韩/美）",
+  version: "1.1.0",
   requiredVersion: "0.0.1",
-  description: "获取 TMDB 的榜单数据",
-  author: "Joy",
-  site: "https://github.com/joy51744/ForwardWidgets",
+  description: "基于 Trakt 和 TMDb 网页解析，支持日剧、韩剧、美剧播放平台和年份筛选，无需 API Key",
+  author: "Forward & ChatGPT",
+  site: "https://github.com/huangxd-/ForwardWidgets",
   modules: [
     {
-      id: "nowPlaying",
-      title: "正在热映",
-      functionName: "nowPlaying",
+      title: "trakt我看（含播放平台筛选与年份筛选）",
+      requiresWebView: false,
+      functionName: "loadInterestItems",
+      cacheDuration: 3600,
       params: [
+        { name: "user_name", title: "用户名", type: "input", description: "Trakt 用户名，必填" },
         {
-          name: "type",
-          title: "接口",
+          name: "status",
+          title: "状态",
           type: "enumeration",
           enumOptions: [
-            {
-              title: "电影",
-              value: "movie",
-            },
-            {
-              title: "剧集",
-              value: "tv",
-            },
-          ],
-        },
-        {
-          name: "page",
-          title: "页码",
-          type: "page"
-        },
-        {
-          name: "language",
-          title: "语言",
-          type: "language",
-          value: "zh-CN",
-        },
-      ],
-    },
-    {
-      id: "trending",
-      title: "趋势",
-      functionName: "trending",
-      params: [
-        {
-          name: "time_window",
-          title: "时间窗口",
-          type: "enumeration",
-          enumOptions: [
-            {
-              title: "今日",
-              value: "day",
-            },
-            {
-              title: "本周",
-              value: "week",
-            },
-          ],
-        },
-        {
-          name: "language",
-          title: "语言",
-          type: "language",
-          value: "zh-CN",
-        },
-      ],
-    },
-    {
-      id: "popular",
-      title: "备受欢迎",
-      functionName: "popular",
-      params: [
-        {
-          name: "type",
-          title: "类型",
-          type: "enumeration",
-          enumOptions: [
-            {
-              title: "电影",
-              value: "movie",
-            },
-            {
-              title: "剧集",
-              value: "tv",
-            },
-          ],
-        },
-        {
-          name: "language",
-          title: "语言",
-          type: "language",
-          value: "zh-CN",
-        },
-        {
-          name: "page",
-          title: "页码",
-          type: "page",
-        },
-      ],
-    },
-    {
-      id: "topRated",
-      title: "高分内容",
-      functionName: "topRated",
-      params: [
-        {
-          name: "type",
-          title: "接口",
-          type: "enumeration",
-          enumOptions: [
-            {
-              title: "电影",
-              value: "movie",
-            },
-            {
-              title: "剧集",
-              value: "tv",
-            },
-          ],
-        },
-        {
-          name: "page",
-          title: "页码",
-          type: "page"
-        },
-        {
-          name: "language",
-          title: "语言",
-          type: "language",
-          value: "zh-CN",
-        },
-      ],
-    },
-    {
-      id: "categories",
-      title: "分类",
-      functionName: "categories",
-      params: [
-        {
-          name: "with_genres",
-          title: "分类",
-          type: "enumeration",
-          enumOptions: [
-            {
-              title: "合家欢",
-              value: "10751",
-            },
-            {
-              title: "动画",
-              value: "16",
-            },
-            {
-              title: "喜剧",
-              value: "35",
-            },
-            {
-              title: "犯罪",
-              value: "80",
-            },
-            {
-              title: "纪录",
-              value: "99",
-            },
-            {
-              title: "剧情",
-              value: "18",
-            },
-            {
-              title: "悬疑",
-              value: "9648",
-            },
-            {
-              title: "西部",
-              value: "37",
-            },
-            {
-              title: "儿童",
-              value: "10762",
-            },
-            {
-              title: "科幻",
-              value: "878",
-            },
-            {
-              title: "动作",
-              value: "28",
-            },
-            {
-              title: "惊悚",
-              value: "53",
-            },
-            {
-              title: "真人秀",
-              value: "10764",
-            },
-          ],
-        },
-        {
-          name: "type",
-          title: "类型",
-          type: "enumeration",
-          belongTo: {
-            paramName: "with_genres",
-            value: ["16", "35", "80", "99", "18", "878", "9648", "37", "10751"],
-          },
-          enumOptions: [
-            {
-              title: "电影",
-              value: "movie",
-            },
-            {
-              title: "剧集",
-              value: "tv",
-            },
-          ],
-        },
-        {
-          name: "with_origin_country",
-          title: "国家",
-          type: "input",
-          belongTo: {
-            paramName: "with_genres",
-            value: ["10764"],
-          },
-          value: "CN",
-          placeholders: [
-            {
-              title: "中国",
-              value: "CN",
-            },
-            {
-              title: "美国",
-              value: "US",
-            },
-            {
-              title: "英国",
-              value: "GB",
-            },
-            {
-              title: "日本",
-              value: "JP",
-            },
-            {
-              title: "韩国",
-              value: "KR",
-            },
-          ],
-        },
-        {
-          name: "page",
-          title: "页码",
-          type: "page"
-        },
-        {
-          name: "language",
-          title: "语言",
-          type: "language",
-          value: "zh-CN",
-        },
-      ],
-    },
-    {
-      id: "networks",
-      title: "播出平台",
-      functionName: "networks",
-      params: [
-        {
-          name: "with_networks",
-          title: "播出平台",
-          type: "enumeration",
-          enumOptions: [
-            {
-              title: "Netflix",
-              value: "213",
-            },
-            {
-              title: "Disney+",
-              value: "2739",
-            },
-            {
-              title: "Apple TV+",
-              value: "2552",
-            },
-            {
-              title: "HBO Max",
-              value: "3186",
-            },
-            {
-              title: "Hulu",
-              value: "453",
-            },
-          ],
-        },
-        {
-          name: "page",
-          title: "页码",
-          type: "page"
-        },
-        {
-          name: "language",
-          title: "语言",
-          type: "language",
-          value: "zh-CN",
-        },
-      ],
-    },
-    {
-      id: "companies",
-      title: "出品公司",
-      functionName: "companies",
-      params: [
-        {
-          name: "with_companies",
-          title: "出品公司",
-          type: "enumeration",
-          enumOptions: [
-            {
-              title: "迪士尼",
-              value: "2",
-            },
-            {
-              title: "华纳兄弟",
-              value: "174",
-            },
-            {
-              title: "哥伦比亚影业",
-              value: "5",
-            },
-            {
-              title: "索尼影业",
-              value: "34",
-            },
-            {
-              title: "环球影业",
-              value: "33",
-            },
-            {
-              title: "派拉蒙影业",
-              value: "4",
-            },
-            {
-              title: "二十世纪影业",
-              value: "25",
-            },
-            {
-              title: "Marvel",
-              value: "420",
-            },
+            { title: "想看", value: "watchlist" },
+            { title: "在看", value: "progress" },
+            { title: "看过-电影", value: "history/movies/added/asc" },
+            { title: "看过-电视", value: "history/shows/added/asc" },
+            { title: "随机想看(想看列表随机9个)", value: "random_watchlist" }
           ]
         },
         {
-          name: "page",
-          title: "页码",
-          type: "page"
-        },
-        {
-          name: "language",
-          title: "语言",
-          type: "language",
-          value: "zh-CN",
-        },
-      ]
-    },
-    {
-      id: "list",
-      title: "片单",
-      functionName: "list",
-      params: [
-        {
-          name: "url",
-          title: "列表地址",
-          type: "input",
-          description: "TMDB 片单地址",
-          placeholders: [
-            {
-              title: "奥斯卡金像奖",
-              value: "https://www.themoviedb.org/list/8512095-2025-oscar-nominations-for-best-picture-97th-academy-awards",
-            }
+          name: "platform_filter",
+          title: "播放平台筛选",
+          type: "enumeration",
+          enumOptions: [
+            { title: "不筛选", value: "none" },
+            { title: "日本电视台", value: "japan" },
+            { title: "韩国电视台", value: "korea" },
+            { title: "美国电视台/平台", value: "us" }
           ],
-        }
+          defaultValue: "none",
+          description: "根据播放平台筛选显示内容"
+        },
+        {
+          name: "year",
+          title: "年份筛选（留空表示不筛选）",
+          type: "input",
+          description: "只显示指定年份上映的电影/剧集"
+        },
+        { name: "page", title: "页码", type: "page" }
       ],
     }
   ],
-};
 
-// 基础获取TMDB数据方法
-async function fetchData(api, params, forceMediaType) {
-  try {
-    const response = await Widget.tmdb.get(api, { params: params });
-
-    if (!response) {
-      throw new Error("获取数据失败");
-    }
-
-    console.log(response);
-    const data = response.results;
-    const result = data.map((item) => {
-      let mediaType = item.media_type;
-      if (forceMediaType) {
-        mediaType = forceMediaType;
-      } else if (mediaType == null) {
-        if (item.title) {
-          mediaType = "movie";
-        } else {
-          mediaType = "tv";
-        }
+  async fetchTmdbNetworksFromHtml(tmdbId, type) {
+    let url = `https://www.themoviedb.org/${type}/${tmdbId}`;
+    try {
+      let response = await Widget.http.get(url, { headers: { "User-Agent": "Mozilla/5.0" } });
+      let doc = Widget.dom.parse(response.data);
+      let networkElements = Widget.dom.select(doc, 'ul.networks li a');
+      if (!networkElements || networkElements.length === 0) return [];
+      let networks = [];
+      for (let el of networkElements) {
+        let href = el.getAttribute('href') || Widget.dom.attr(el, 'href');
+        if (!href) continue;
+        let match = href.match(/\/network\/(\d+)-/);
+        if (match) networks.push(parseInt(match[1], 10));
       }
-      return {
-        id: item.id,
-        type: "tmdb",
-        title: item.title ?? item.name,
-        description: item.overview,
-        releaseDate: item.release_date ?? item.first_air_date,
-        backdropPath: item.backdrop_path,
-        posterPath: item.poster_path,
-        rating: item.vote_average,
-        mediaType: mediaType,
-      };
-    });
-    return result;
-  } catch (error) {
-    console.error("调用 TMDB API 失败:", error);
-    throw error;
-  }
-}
+      return networks;
+    } catch {
+      return [];
+    }
+  },
 
-async function nowPlaying(params) {
-  const type = params.type;
-  let api = "tv/on_the_air";
-  if (type === "movie") {
-    api = "movie/now_playing";
-  }
-  return await fetchData(api, params, type);
-}
+  // 新增：抓取并返回 imdbId, tmdbId, type, year（上映年份）
+  async fetchDetailsWithTmdbInfo(traktUrl) {
+    try {
+      let detailResponse = await Widget.http.get(traktUrl, { headers: { "User-Agent": "Mozilla/5.0" } });
+      let detailDoc = Widget.dom.parse(detailResponse.data);
+      let imdbLinkEl = Widget.dom.select(detailDoc, 'a#external-link-imdb')[0];
+      let tmdbLinkEl = Widget.dom.select(detailDoc, 'a#external-link-tmdb')[0];
+      if (!imdbLinkEl || !tmdbLinkEl) return null;
+      let imdbMatch = (imdbLinkEl.getAttribute('href') || "").match(/title\/(tt\d+)/);
+      let tmdbHref = tmdbLinkEl.getAttribute('href') || "";
+      let tmdbMatch = tmdbHref.match(/\/(movie|tv)\/(\d+)/);
+      if (!imdbMatch || !tmdbMatch) return null;
 
-async function trending(params) {
-  const timeWindow = params.time_window;
-  const api = `trending/all/${timeWindow}`;
-  delete params.time_window;
-  return await fetchData(api, params);
-}
+      // 抓年份，电影取上映日期年份，剧集取首播年份
+      let year = null;
+      try {
+        if (tmdbMatch[1] === 'movie') {
+          let releaseDateEl = Widget.dom.select(detailDoc, 'section#main div.header span.release_date')[0];
+          if (releaseDateEl) {
+            let dateText = (releaseDateEl.textContent || releaseDateEl.innerText || "").trim();
+            let y = dateText.match(/\d{4}/);
+            if (y) year = parseInt(y[0], 10);
+          }
+        } else if (tmdbMatch[1] === 'tv') {
+          let firstAirEl = Widget.dom.select(detailDoc, 'section#main div.header span.first_air_date')[0];
+          if (firstAirEl) {
+            let dateText = (firstAirEl.textContent || firstAirEl.innerText || "").trim();
+            let y = dateText.match(/\d{4}/);
+            if (y) year = parseInt(y[0], 10);
+          }
+        }
+      } catch {}
 
-async function popular(params) {
-  const type = params.type;
-  let api = `movie/popular`;
-  if (type === "tv") {
-    api = `tv/popular`;
-  }
-  delete params.type;
-  return await fetchData(api, params, type);
-}
+      return { imdbId: imdbMatch[1], tmdbId: tmdbMatch[2], type: tmdbMatch[1], year };
+    } catch {
+      return null;
+    }
+  },
 
-async function topRated(params) {
-  const type = params.type;
-  let api = `movie/top_rated`;
-  if (type === "tv") {
-    api = `tv/top_rated`;
-  }
-  delete params.type;
-  return await fetchData(api, params, type);
-}
+  async fetchAndFilterByNetworksAndYear(traktUrl, filterNetworkIds = [], filterYear = null) {
+    let info = await this.fetchDetailsWithTmdbInfo(traktUrl);
+    if (!info) return null;
 
-async function categories(params) {
-  let genreId = params.with_genres;
-  let type = params.type;
-  const onlyMovieGenreIds = ["28", "53"];//动作，惊悚
-  const onlyTvGenreIds = ["10762", "10764", "10766"];//儿童，真人秀，肥皂剧
-  if (genreId == "878" && type == "tv") {
-    genreId = "10765";
-  }
-  if (onlyMovieGenreIds.includes(genreId)) {
-    type = "movie";
-  }
-  if (onlyTvGenreIds.includes(genreId)) {
-    type = "tv";
-  }
-  const api = `discover/${type}`;
-  params.with_genres = genreId;
-  delete params.type;
-  return await fetchData(api, params, type);
-}
+    // 年份筛选
+    if (filterYear && info.year !== filterYear) return null;
 
-async function networks(params) {
-  let api = `discover/tv`;
-  delete params.type;
-  return await fetchData(api, params);
-}
+    let networks = await this.fetchTmdbNetworksFromHtml(info.tmdbId, info.type);
+    if (!networks || networks.length === 0) return null;
+    let matched = filterNetworkIds.length === 0 || networks.some(netId => filterNetworkIds.includes(netId));
+    return matched ? { id: info.imdbId, type: "imdb" } : null;
+  },
 
-async function companies(params) {
-  let api = `discover/movie`;
-  delete params.type;
-  return await fetchData(api, params, "movie");
-}
+  async fetchImdbIdsFromTraktUrlsWithNetworkFilterAndYear(traktUrls, filterNetworkIds = [], filterYear = null) {
+    let promises = traktUrls.map(url => this.fetchAndFilterByNetworksAndYear(url, filterNetworkIds, filterYear));
+    let results = await Promise.all(promises);
+    return [...new Set(results.filter(Boolean))];
+  },
 
-async function list(params = {}) {
-  let url = params.url;
-
-  // append ?view=grid
-  if (!url.includes("view=grid")) {
-    if (url.includes("?")) {
-      url = url + "&view=grid";
+  extractTraktUrlsFromResponse(responseData, minNum, maxNum, random = false) {
+    let docId = Widget.dom.parse(responseData);
+    let metaElements = Widget.dom.select(docId, 'meta[content^="https://trakt.tv/"]');
+    if (!metaElements || metaElements.length === 0) throw new Error("未找到任何 meta content 链接");
+    let traktUrls = Array.from(new Set(metaElements.map(el => el.getAttribute?.('content') || Widget.dom.attr(el, 'content')).filter(Boolean)));
+    if (random) {
+      const shuffled = traktUrls.sort(() => 0.5 - Math.random());
+      return shuffled.slice(0, Math.min(9, shuffled.length));
     } else {
-      url = url + "?view=grid";
+      return traktUrls.slice(minNum - 1, maxNum);
     }
-  }
+  },
 
-  console.log("请求片单页面:", url);
-  // 发送请求获取片单页面
-  const response = await Widget.http.get(url, {
-    headers: {
-      Referer: `https://www.themoviedb.org/`,
-      "User-Agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-    },
-  });
+  extractTraktUrlsInProgress(responseData, minNum, maxNum) {
+    let docId = Widget.dom.parse(responseData);
+    let mainInfoElements = Widget.dom.select(docId, 'div.col-md-15.col-sm-8.main-info');
+    if (!mainInfoElements || mainInfoElements.length === 0) throw new Error("未找到任何 main-info 元素");
+    let traktUrls = [];
+    mainInfoElements.slice(minNum - 1, maxNum).forEach(element => {
+      let linkElement = Widget.dom.select(element, 'a[href^="/shows/"]')[0];
+      if (!linkElement) return;
+      let href = linkElement.getAttribute?.('href') || Widget.dom.attr(linkElement, 'href');
+      if (!href) return;
+      let progressElement = Widget.dom.select(element, 'div.progress.ticks')[0];
+      let progressValue = progressElement
+        ? parseInt(progressElement.getAttribute?.('aria-valuenow') || Widget.dom.attr(progressElement, 'aria-valuenow') || '0')
+        : 0;
+      if (progressValue !== 100) {
+        traktUrls.push(`https://trakt.tv${href}`);
+      }
+    });
+    return Array.from(new Set(traktUrls));
+  },
 
-  if (!response || !response.data) {
-    throw new Error("获取片单数据失败");
-  }
+  async fetchImdbIdsFromTraktUrls(traktUrls) {
+    let imdbIdPromises = traktUrls.map(async (url) => {
+      try {
+        let detailResponse = await Widget.http.get(url, { headers: { "User-Agent": "Mozilla/5.0" } });
+        let detailDoc = Widget.dom.parse(detailResponse.data);
+        let imdbLinkEl = Widget.dom.select(detailDoc, 'a#external-link-imdb')[0];
+        if (!imdbLinkEl) return null;
+        let href = imdbLinkEl.getAttribute('href');
+        let match = href.match(/title\/(tt\d+)/);
+        return match ? { id: match[1], type: "imdb" } : null;
+      } catch {
+        return null;
+      }
+    });
+    let imdbIds = [...new Set((await Promise.all(imdbIdPromises)).filter(Boolean))];
+    return imdbIds;
+  },
 
+  async fetchTraktData(url, headers = {}, status, minNum, maxNum, random = false, order = "", filterNetworkIds = [], filterYear = null) {
+    try {
+      const response = await Widget.http.get(url, {
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          "Pragma": "no-cache",
+          "Expires": "0",
+          ...headers,
+        },
+      });
 
-  console.log("片单页面数据长度:", response.data.length);
-  console.log("开始解析");
+      let traktUrls = [];
+      if (status === "progress") {
+        traktUrls = this.extractTraktUrlsInProgress(response.data, minNum, maxNum);
+      } else {
+        traktUrls = this.extractTraktUrlsFromResponse(response.data, minNum, maxNum, random);
+      }
 
-  // 解析 HTML 得到文档 ID
-  const $ = Widget.html.load(response.data);
-  if (!$ || $ === null) {
-    throw new Error("解析 HTML 失败");
-  }
+      if (order === "desc") traktUrls = traktUrls.reverse();
 
-  //        // 获取所有视频项，得到元素ID数组
-  const coverElements = $(".block.aspect-poster");
-
-  console.log("items:", coverElements);
-
-  let tmdbIds = [];
-  for (const itemId of coverElements) {
-    const $item = $(itemId);
-    const link = $item.attr("href");
-    if (!link) {
-      continue;
+      if (filterNetworkIds.length > 0 || filterYear !== null) {
+        return await this.fetchImdbIdsFromTraktUrlsWithNetworkFilterAndYear(traktUrls, filterNetworkIds, filterYear);
+      } else {
+        return await this.fetchImdbIdsFromTraktUrls(traktUrls);
+      }
+    } catch (e) {
+      console.error("fetchTraktData error:", e);
+      throw e;
     }
-    const match = link.match(/^\/(movie|tv)\/([^\/-]+)-/)
-    const type = match?.[1];
-    const id = match?.[2];
-    if (id && type) {
-      tmdbIds.push({ id: `${type}.${id}`, type: 'tmdb' });
-    }
-  }
+  },
 
-  return tmdbIds;
-}
+  async loadInterestItems(params = {}) {
+    const page = params.page || 1;
+    const userName = params.user_name || "";
+    let status = params.status || "";
+    const random = status === "random_watchlist";
+    if (random) status = "watchlist";
+
+    if (!userName) throw new Error("必须提供 Trakt 用户名");
+    if (random && page > 1) return [];
+
+    const count = 20;
+    const size = status === "watchlist" ? 6 : 3;
+    const minNum = ((page - 1) % size) * count + 1;
+    const maxNum = ((page - 1) % size) * count + 20;
+    const traktPage = Math.floor((page - 1) / size) + 1;
+
+    let url = `https://trakt.tv/users/${userName}/${status}?page=${traktPage}`;
+
+    let filterNetworkIds = [];
+    switch (params.platform_filter) {
+      case "japan": filterNetworkIds = JAPAN_NETWORKS; break;
+      case "korea": filterNetworkIds = KOREA_NETWORKS; break;
+      case "us": filterNetworkIds = US_NETWORKS; break;
+      case "none":
+      default:
+        filterNetworkIds = [];
+    }
+
+    let filterYear = null;
+    if (params.year) {
+      const y = parseInt(params.year, 10);
+      if (!isNaN(y)) filterYear = y;
+    }
+
+    return await this.fetchTraktData(url, {}, status, minNum, maxNum, random, "", filterNetworkIds, filterYear);
+  },
+};
