@@ -32,9 +32,9 @@ WidgetMetadata = {
           ],
         },
         {
-          name: "region",
+          name: "countries",
           title: "地区",
-          type: "countries",
+          type: "enumeration",
           enumOptions: [
             { title: "全部", value: "" },
             { title: "日本", value: "JP" },
