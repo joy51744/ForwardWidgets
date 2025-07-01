@@ -1,6 +1,6 @@
 const WidgetMetadata = {
-  id: "IMDbWatchlist",
-  title: "IMDb Watchlist（含地区筛选）",
+  id: "IMDbfliter",
+  title: "IMDb Watchlist+篩選功能",
   version: "1.0.1",
   requiredVersion: "0.0.1",
   description: "通过抓取 IMDb 用户 Watchlist 页面并可筛选影片国家地区，无需 API Key",
