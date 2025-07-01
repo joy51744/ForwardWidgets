@@ -1,438 +1,263 @@
-// trakt组件
+// forward.widgets.js
 WidgetMetadata = {
-    id: "Trakt",
-    title: "Trakt我看&Trakt个性化推荐",
-    modules: [
+  id: "Trakt",
+  title: "Trakt我看&Trakt个性化推荐+TMDB平台筛选(无API Key版)",
+  version: "1.0.13",
+  requiredVersion: "0.0.1",
+  description:
+    "解析Trakt想看、在看、已看、片单、追剧日历、个性化推荐，支持按TMDB播放平台筛选(无API Key版)",
+  author: "huangxd + ChatGPT",
+  site: "https://github.com/huangxd-/ForwardWidgets",
+  modules: [
+    {
+      title: "Trakt推荐 × TMDB平台筛选(无API Key)",
+      requiresWebView: false,
+      functionName: "loadSuggestionWithPlatform",
+      cacheDuration: 43200,
+      params: [
         {
-            title: "trakt我看",
-            requiresWebView: false,
-            functionName: "loadInterestItems",
-            cacheDuration: 3600,
-            params: [
-                {
-                    name: "user_name",
-                    title: "用户名",
-                    type: "input",
-                    description: "需在Trakt设置里打开隐私开关，未填写情况下接口不可用",
-                },
-                {
-                    name: "status",
-                    title: "状态",
-                    type: "enumeration",
-                    enumOptions: [
-                        {
-                            title: "想看",
-                            value: "watchlist",
-                        },
-                        {
-                            title: "在看",
-                            value: "progress",
-                        },
-                        {
-                            title: "看过-电影",
-                            value: "history/movies/added/asc",
-                        },
-                        {
-                            title: "看过-电视",
-                            value: "history/shows/added/asc",
-                        },
-                        {
-                            title: "随机想看(从想看列表中无序抽取9个影片)",
-                            value: "random_watchlist",
-                        },
-                    ],
-                },
-                {
-                    name: "page",
-                    title: "页码",
-                    type: "page"
-                },
-            ],
+          name: "cookie",
+          title: "用户Cookie",
+          type: "input",
+          description:
+            "_traktsession=xxxx，未填写情况下接口不可用；可登陆网页后，通过loon，Qx等软件抓包获取Cookie",
         },
         {
-            title: "Trakt个性化推荐",
-            requiresWebView: false,
-            functionName: "loadSuggestionItems",
-            cacheDuration: 43200,
-            params: [
-                {
-                    name: "cookie",
-                    title: "用户Cookie",
-                    type: "input",
-                    description: "_traktsession=xxxx，未填写情况下接口不可用；可登陆网页后，通过loon，Qx等软件抓包获取Cookie",
-                },
-                {
-                    name: "type",
-                    title: "类型",
-                    type: "enumeration",
-                    enumOptions: [
-                        {
-                            title: "电影",
-                            value: "movies",
-                        },
-                        {
-                            title: "电视",
-                            value: "shows",
-                        },
-                    ],
-                },
-                {
-                    name: "page",
-                    title: "页码",
-                    type: "page"
-                },
-            ],
+          name: "type",
+          title: "类型",
+          type: "enumeration",
+          enumOptions: [
+            { title: "电影", value: "movies" },
+            { title: "电视", value: "shows" },
+          ],
         },
         {
-            title: "Trakt片单",
-            requiresWebView: false,
-            functionName: "loadListItems",
-            cacheDuration: 86400,
-            params: [
-                {
-                    name: "user_name",
-                    title: "用户名",
-                    type: "input",
-                    description: "如：giladg，未填写情况下接口不可用",
-                },
-                {
-                    name: "list_name",
-                    title: "片单列表名",
-                    type: "input",
-                    description: "如：latest-4k-releases，未填写情况下接口不可用",
-                },
-                {
-                    name: "sort_by",
-                    title: "排序依据",
-                    type: "enumeration",
-                    enumOptions: [
-                        {
-                            title: "排名算法",
-                            value: "rank",
-                        },
-                        {
-                            title: "添加时间",
-                            value: "added",
-                        },
-                        {
-                            title: "标题",
-                            value: "title",
-                        },
-                        {
-                            title: "发布日期",
-                            value: "released",
-                        },
-                        {
-                            title: "内容时长",
-                            value: "runtime",
-                        },
-                        {
-                            title: "流行度",
-                            value: "popularity",
-                        },
-                        {
-                            title: "随机",
-                            value: "random",
-                        },
-                    ],
-                },
-                {
-                    name: "sort_how",
-                    title: "排序方向",
-                    type: "enumeration",
-                    enumOptions: [
-                        {
-                            title: "正序",
-                            value: "asc",
-                        },
-                        {
-                            title: "反序",
-                            value: "desc",
-                        },
-                    ],
-                },
-                {
-                    name: "page",
-                    title: "页码",
-                    type: "page"
-                },
-            ],
+          name: "platform",
+          title: "播放平台",
+          type: "enumeration",
+          enumOptions: [
+            { title: "tvN", value: "4430" },
+            { title: "KBS2", value: "147" },
+            { title: "SBS", value: "79" },
+            { title: "MBC", value: "98" },
+            { title: "JTBC", value: "4344" },
+            { title: "ENA", value: "174537" },
+            { title: "TV Chosun", value: "1116" },
+            { title: "Channel A", value: "1746" },
+            { title: "OCN", value: "129506" },
+            { title: "NHK", value: "2716" },
+            { title: "Fuji TV", value: "2440" },
+            { title: "NTV (日本电视台)", value: "328" },
+            { title: "TBS", value: "291" },
+            { title: "TV Tokyo", value: "233" },
+            { title: "WOWOW", value: "318" },
+            { title: "TV Asahi", value: "235" },
+            { title: "Kansai TV", value: "2405" },
+            { title: "Netflix", value: "213" },
+            { title: "Amazon Prime Video", value: "1024" },
+            { title: "Disney+", value: "337" },
+            { title: "Hulu", value: "15" },
+            { title: "HBO Max", value: "384" },
+            { title: "Apple TV+", value: "350" },
+            { title: "AMC", value: "174" },
+            { title: "NBC", value: "6" },
+            { title: "CBS", value: "16" },
+            { title: "ABC", value: "2" },
+            { title: "FX", value: "88" },
+            { title: "The CW", value: "71" },
+          ],
         },
         {
-            title: "Trakt追剧日历",
-            requiresWebView: false,
-            functionName: "loadCalendarItems",
-            cacheDuration: 43200,
-            params: [
-                {
-                    name: "cookie",
-                    title: "用户Cookie",
-                    type: "input",
-                    description: "_traktsession=xxxx，未填写情况下接口不可用；可登陆网页后，通过loon，Qx等软件抓包获取Cookie",
-                },
-                {
-                    name: "start_date",
-                    title: "开始日期：n天前（0表示今天，-1表示昨天，1表示明天）",
-                    type: "input",
-                    description: "0表示今天，-1表示昨天，1表示明天，未填写情况下接口不可用",
-                },
-                {
-                    name: "days",
-                    title: "天数",
-                    type: "input",
-                    description: "如：7，会返回从开始日期起的7天内的节目，未填写情况下接口不可用",
-                },
-                {
-                    name: "order",
-                    title: "排序方式",
-                    type: "enumeration",
-                    enumOptions: [
-                        {
-                            title: "日期升序",
-                            value: "asc",
-                        },
-                        {
-                            title: "日期降序",
-                            value: "desc",
-                        },
-                    ],
-                },
-            ],
+          name: "region",
+          title: "地区代码",
+          type: "enumeration",
+          enumOptions: [
+            { title: "台湾", value: "TW" },
+            { title: "韩国", value: "KR" },
+            { title: "日本", value: "JP" },
+            { title: "美国", value: "US" },
+          ],
         },
-    ],
-    version: "1.0.11",
-    requiredVersion: "0.0.1",
-    description: "解析Trakt想看、在看、已看、片单、追剧日历以及根据个人数据生成的个性化推荐【五折码：CHEAP.5;七折码：CHEAP】",
-    author: "huangxd",
-    site: "https://github.com/huangxd-/ForwardWidgets"
+        {
+          name: "year",
+          title: "年份",
+          type: "input",
+          description: "如：2024，可选填",
+        },
+        { name: "page", title: "页码", type: "page" },
+      ],
+    },
+  ],
 };
 
-function extractTraktUrlsFromResponse(responseData, minNum, maxNum, random = false) {
-    let docId = Widget.dom.parse(responseData);
-    let metaElements = Widget.dom.select(docId, 'meta[content^="https://trakt.tv/"]');
-    if (!metaElements || metaElements.length === 0) {
-        throw new Error("未找到任何 meta content 链接");
-    }
-
-    let traktUrls = Array.from(new Set(metaElements
-        .map(el => el.getAttribute?.('content') || Widget.dom.attr(el, 'content'))
-        .filter(Boolean)));
-    if (random) {
-        const shuffled = traktUrls.sort(() => 0.5 - Math.random());
-        return shuffled.slice(0, Math.min(9, shuffled.length));
-    } else {
-        return traktUrls.slice(minNum - 1, maxNum);
-    }
+// 辅助函数：IMDb ID -> TMDB ID + 类型
+async function fetchTmdbIdAndTypeByImdbId(imdbId) {
+  try {
+    const url = `https://www.themoviedb.org/find/${imdbId}?language=zh-CN`;
+    const resp = await Widget.http.get(url);
+    const html = resp.data;
+    const match = html.match(/href="\/(movie|tv)\/(\d+)[^"]*"/);
+    if (!match) return null;
+    return { tmdbId: match[2], mediaType: match[1] };
+  } catch (e) {
+    console.error("fetchTmdbIdAndTypeByImdbId error:", e, imdbId);
+    return null;
+  }
 }
 
-function extractTraktUrlsInProgress(responseData, minNum, maxNum) {
-    let docId = Widget.dom.parse(responseData);
-    let mainInfoElements = Widget.dom.select(docId, 'div.col-md-15.col-sm-8.main-info');
+// 辅助函数：解析 TMDB 详情页（年份、评分、播放平台）
+async function fetchTmdbDetailByHtml(tmdbId, mediaType, region) {
+  try {
+    const url = `https://www.themoviedb.org/${mediaType}/${tmdbId}?language=zh-CN`;
+    const resp = await Widget.http.get(url);
+    const html = resp.data;
 
-    if (!mainInfoElements || mainInfoElements.length === 0) {
-        throw new Error("未找到任何 main-info 元素");
+    let year = null;
+    let yearMatch = html.match(/<h2 class="title">[\s\S]*?\((\d{4})\)/);
+    if (!yearMatch) yearMatch = html.match(/(\d{4})/);
+    if (yearMatch) year = parseInt(yearMatch[1]);
+
+    const voteMatch = html.match(/<meta name="twitter:data1" content="([\d\.]+) \/ 10"/);
+    const voteAverage = voteMatch ? parseFloat(voteMatch[1]) : null;
+
+    const networks = [];
+    const networkRegex = /<a href="\/network\/(\d+)"[^>]*>/g;
+    let matchNet;
+    while ((matchNet = networkRegex.exec(html)) !== null) {
+      networks.push(matchNet[1]);
     }
 
-    let traktUrls = [];
-    mainInfoElements.slice(minNum - 1, maxNum).forEach(element => {
-        // 提取 href 值
-        let linkElement = Widget.dom.select(element, 'a[href^="/shows/"]')[0];
-        if (!linkElement) return;
+    return { year, voteAverage, networks };
+  } catch (e) {
+    console.error("fetchTmdbDetailByHtml error:", e, tmdbId, mediaType);
+    return null;
+  }
+}
 
-        let href = linkElement.getAttribute?.('href') || Widget.dom.attr(linkElement, 'href');
-        if (!href) return;
+// 组合函数：IMDb ID 转 TMDB 并取详情
+async function fetchTmdbAndImdbInfoWithoutApiKey(imdbId, region) {
+  const idType = await fetchTmdbIdAndTypeByImdbId(imdbId);
+  if (!idType) return null;
+  const detail = await fetchTmdbDetailByHtml(idType.tmdbId, idType.mediaType, region);
+  if (!detail) return null;
+  return {
+    imdbId,
+    tmdbId: idType.tmdbId,
+    mediaType: idType.mediaType,
+    year: detail.year,
+    voteAverage: detail.voteAverage,
+    networks: detail.networks,
+  };
+}
 
-        // 提取 progress 值
-        let progressElement = Widget.dom.select(element, 'div.progress.ticks')[0];
-        let progressValue = progressElement
-            ? parseInt(progressElement.getAttribute?.('aria-valuenow') || Widget.dom.attr(progressElement, 'aria-valuenow') || '0')
-            : 0;
+// 从 Trakt 推荐页提取影视链接
+function extractTraktUrlsFromResponse(html, minNum = 1, maxNum = 50) {
+  const metaUrls = [];
+  const regex = /https:\/\/trakt\.tv\/(movies|shows)\/[a-zA-Z0-9\-]+/g;
+  let match;
+  while ((match = regex.exec(html)) !== null) {
+    metaUrls.push(match[0]);
+  }
+  return metaUrls.slice(minNum - 1, maxNum);
+}
 
-        // 如果 progress 不是 100，添加 URL
-        if (progressValue !== 100) {
-            let fullUrl = `https://trakt.tv${href}`;
-            traktUrls.push(fullUrl);
+// 主函数：加载推荐并筛选播放平台
+async function loadSuggestionWithPlatform(params = {}) {
+  try {
+    const cookie = params.cookie || "";
+    const type = params.type || "";
+    const platformId = params.platform || "";
+    const region = params.region || "US";
+    const yearFilter = params.year ? parseInt(params.year, 10) : null;
+    const page = params.page || 1;
+
+    if (!cookie) throw new Error("必须提供用户Cookie");
+    if (!type) throw new Error("必须提供类型");
+    if (!platformId) throw new Error("必须提供播放平台");
+
+    const url = `https://trakt.tv/${type}/recommendations?page=${page}`;
+    const headers = { Cookie: cookie };
+
+    console.log(`[loadSuggestionWithPlatform] 请求 URL: ${url}`);
+    const resp = await Widget.http.get(url, { headers });
+    console.log(`[loadSuggestionWithPlatform] 返回状态: ${resp.status}`);
+
+    const traktUrls = extractTraktUrlsFromResponse(resp.data, 1, 50);
+    console.log(`[loadSuggestionWithPlatform] 抓取到 Trakt 影视链接数: ${traktUrls.length}`);
+
+    const imdbIds = new Set();
+    const batchSize = 5;
+
+    for (let i = 0; i < traktUrls.length; i += batchSize) {
+      const batch = traktUrls.slice(i, i + batchSize);
+      console.log(`[loadSuggestionWithPlatform] 批量请求 Trakt 详情页，批次 ${i / batchSize + 1}, 条数 ${batch.length}`);
+
+      const batchResults = await Promise.all(
+        batch.map(async (url) => {
+          try {
+            const resp = await Widget.http.get(url);
+            if (resp.status !== 200) {
+              console.warn(`[loadSuggestionWithPlatform] 详情页非200状态: ${resp.status}，URL: ${url}`);
+              return null;
+            }
+            const html = resp.data;
+            const imdbMatch = html.match(/https?:\/\/www\.imdb\.com\/title\/(tt\d+)/);
+            if (!imdbMatch) {
+              console.warn(`[loadSuggestionWithPlatform] 未找到 IMDb ID，URL: ${url}`);
+              return null;
+            }
+            return imdbMatch[1];
+          } catch (err) {
+            console.error(`[loadSuggestionWithPlatform] 请求 Trakt 详情页异常，URL: ${url}`, err.stack || err);
+            return null;
+          }
+        })
+      );
+
+      batchResults.forEach((id) => id && imdbIds.add(id));
+    }
+
+    console.log(`[loadSuggestionWithPlatform] 总共抓取到 IMDb ID 数量: ${imdbIds.size}`);
+
+    const filteredResults = [];
+    let index = 0;
+    for (const imdbId of imdbIds) {
+      index++;
+      try {
+        console.log(`[loadSuggestionWithPlatform] 处理第${index}个 IMDb ID: ${imdbId}`);
+        const info = await fetchTmdbAndImdbInfoWithoutApiKey(imdbId, region);
+        if (!info) {
+          console.warn(`[loadSuggestionWithPlatform] 未获取到 TMDB 信息，IMDb ID: ${imdbId}`);
+          continue;
         }
-    });
-
-    return Array.from(new Set(traktUrls));
-}
-
-async function fetchImdbIdsFromTraktUrls(traktUrls) {
-    let imdbIdPromises = traktUrls.map(async (url) => {
-        try {
-            let detailResponse = await Widget.http.get(url, {
-                headers: {
-                    "User-Agent":
-                        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-                    "Cache-Control": "no-cache, no-store, must-revalidate",
-                    "Pragma": "no-cache",
-                    "Expires": "0",
-                },
-            });
-
-            let detailDoc = Widget.dom.parse(detailResponse.data);
-            let imdbLinkEl = Widget.dom.select(detailDoc, 'a#external-link-imdb')[0];
-
-            if (!imdbLinkEl) return null;
-
-            let href = Widget.dom.attr(imdbLinkEl, 'href');
-            let match = href.match(/title\/(tt\d+)/);
-
-            return match ? `${match[1]}` : null;
-        } catch {
-            return null; // 忽略单个失败请求
+        if (yearFilter && info.year !== yearFilter) {
+          console.log(`[loadSuggestionWithPlatform] 跳过年份不符，IMDb ID: ${imdbId}, 年份: ${info.year}`);
+          continue;
         }
-    });
-
-    let imdbIds = [...new Set(
-        (await Promise.all(imdbIdPromises))
-            .filter(Boolean)
-            .map((item) => item)
-    )].map((id) => ({
-        id,
-        type: "imdb",
-    }));
-    console.log("请求imdbIds:", imdbIds)
-    return imdbIds;
-}
-
-async function fetchTraktData(url, headers = {}, status, minNum, maxNum, random = false, order = "") {
-    try {
-        const response = await Widget.http.get(url, {
-            headers: {
-                "User-Agent":
-                    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Pragma": "no-cache",
-                "Expires": "0",
-                ...headers, // 允许附加额外的头
-            },
-        });
-
-        console.log("请求结果:", response.data);
-
-        let traktUrls = [];
-        if (status === "progress") {
-            traktUrls = extractTraktUrlsInProgress(response.data, minNum, maxNum);
+        if (info.networks && info.networks.includes(platformId)) {
+          filteredResults.push({
+            id: imdbId,
+            type: "imdb",
+            tmdbId: info.tmdbId,
+            mediaType: info.mediaType,
+            year: info.year,
+            rating: info.voteAverage,
+          });
+          console.log(`[loadSuggestionWithPlatform] 符合筛选条件，加入结果，IMDb ID: ${imdbId}`);
         } else {
-            traktUrls = extractTraktUrlsFromResponse(response.data, minNum, maxNum, random);
+          console.log(`[loadSuggestionWithPlatform] 不符合播放平台，IMDb ID: ${imdbId}`);
         }
-
-        if (order === "desc") {
-            traktUrls = traktUrls.reverse();
-        }
-
-        return await fetchImdbIdsFromTraktUrls(traktUrls);
-    } catch (error) {
-        console.error("处理失败:", error);
-        throw error;
+      } catch (err) {
+        console.error(`[loadSuggestionWithPlatform] 处理 IMDb ID 异常，IMDb ID: ${imdbId}`, err.stack || err);
+      }
     }
+
+    console.log(`[loadSuggestionWithPlatform] 返回结果数: ${filteredResults.length}`);
+    return filteredResults;
+  } catch (e) {
+    console.error("[loadSuggestionWithPlatform] 重大错误:", e.stack || e);
+    throw e;
+  }
 }
 
-async function loadInterestItems(params = {}) {
-    try {
-        const page = params.page;
-        const userName = params.user_name || "";
-        let status = params.status || "";
-        const random = status === "random_watchlist";
-        if (random) {
-            status = "watchlist";
-        }
-        const count = 20
-        const size = status === "watchlist" ? 6 : 3
-        const minNum = ((page - 1) % size) * count + 1
-        const maxNum = ((page - 1) % size) * count + 20
-        const traktPage = Math.floor((page - 1) / size) + 1
-
-        if (!userName) {
-            throw new Error("必须提供 Trakt 用户名");
-        }
-
-        if (random && page > 1) {
-            return [];
-        }
-
-        let url = `https://trakt.tv/users/${userName}/${status}?page=${traktPage}`;
-        return await fetchTraktData(url, {}, status, minNum, maxNum, random);
-    } catch (error) {
-        console.error("处理失败:", error);
-        throw error;
-    }
-}
-
-async function loadSuggestionItems(params = {}) {
-    try {
-        const page = params.page;
-        const cookie = params.cookie || "";
-        const type = params.type || "";
-        const count = 20;
-        const minNum = (page - 1) * count + 1
-        const maxNum = (page) * count
-
-        if (!cookie) {
-            throw new Error("必须提供用户Cookie");
-        }
-
-        let url = `https://trakt.tv/${type}/recommendations`;
-        return await fetchTraktData(url, {Cookie: cookie}, "", minNum, maxNum);
-    } catch (error) {
-        console.error("处理失败:", error);
-        throw error;
-    }
-}
-
-async function loadListItems(params = {}) {
-    try {
-        const page = params.page;
-        const userName = params.user_name || "";
-        const listName = params.list_name || "";
-        const sortBy = params.sort_by || "";
-        const sortHow = params.sort_how || "";
-        const count = 20
-        const minNum = ((page - 1) % 6) * count + 1
-        const maxNum = ((page - 1) % 6) * count + 20
-        const traktPage = Math.floor((page - 1) / 6) + 1
-
-        if (!userName || !listName) {
-            throw new Error("必须提供 Trakt 用户名 和 片单列表名");
-        }
-
-        let url = `https://trakt.tv/users/${userName}/lists/${listName}?page=${traktPage}&sort=${sortBy},${sortHow}`;
-        return await fetchTraktData(url, {}, "", minNum, maxNum);
-    } catch (error) {
-        console.error("处理失败:", error);
-        throw error;
-    }
-}
-
-async function loadCalendarItems(params = {}) {
-    try {
-        const cookie = params.cookie || "";
-        const startDateInput = params.start_date || "";
-        const days = params.days || "";
-        const order = params.order || "";
-
-        if (!cookie || !startDateInput || !days || !order) {
-            throw new Error("必须提供用户Cookie、开始日期、天数及排序方式");
-        }
-
-        const startDateOffset = parseInt(startDateInput, 10);
-        if (isNaN(startDateOffset)) {
-            throw new Error("开始日期必须是有效的数字");
-        }
-
-        const today = new Date();
-        const startDate = new Date(today);
-        startDate.setDate(today.getDate() + startDateOffset);
-
-        // Format date as YYYY-MM-DD
-        const formattedStartDate = startDate.toISOString().split('T')[0];
-
-        let url = `https://trakt.tv/calendars/my/shows-movies/${formattedStartDate}/${days}`;
-        return await fetchTraktData(url, {Cookie: cookie}, "", 1, 100, false, order);
-    } catch (error) {
-        console.error("处理失败:", error);
-        throw error;
-    }
-}
+export { WidgetMetadata, loadSuggestionWithPlatform };
