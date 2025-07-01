@@ -1,0 +1,16 @@
+{
+  "title": "Forward Widgets",
+  "description": "Forward Official Widgets",
+  "icon": "https://assets.vvebo.vip/scripts/icon.png",
+  "widgets": [
+    {
+      "id": "forward.tmdb",
+      "title": "TMDB",
+      "description": "获取 TMDB 的榜单数据",
+      "requiredVersion": "0.0.1",
+      "version": "1.0.0",
+      "author": "Forward",
+      "url": "https://assets.vvebo.vip/scripts/tmdb.js"
+    }
+  ]
+}
