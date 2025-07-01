@@ -4,8 +4,8 @@
   "icon": "https://assets.vvebo.vip/scripts/icon.png",
   "widgets": [
     {
-      "id": "forward.tmdb",
-      "title": "TMDB",
+      "id": "IMDbWatchlist",
+      "title": "IMDb Watchlist",
       "description": "获取 TMDB 的榜单数据",
       "requiredVersion": "0.0.1",
       "version": "1.0.0",
