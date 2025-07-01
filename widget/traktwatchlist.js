@@ -1,9 +1,9 @@
 WidgetMetadata = {
   id: "Trakt",
-  title: "Trakt我看+地区筛选",
+  title: "Trakt我看&Trakt个性化推荐",
   version: "1.0.12",
   requiredVersion: "0.0.1",
-  description: "解析Trakt我看（想看/在看/已看/随机），支持地区筛选",
+  description: "解析Trakt我看（想看/在看/已看/随机），支持地区筛选（日本、韩国、美国）【免API Key】",
   author: "Forward",
   site: "https://github.com/huangxd-/ForwardWidgets",
   modules: [
@@ -32,7 +32,7 @@ WidgetMetadata = {
           ],
         },
         {
-          name: "countries",
+          name: "region",
           title: "地区",
           type: "enumeration",
           enumOptions: [
