@@ -1,11 +1,11 @@
-WidgetMetadata = {
+const WidgetMetadata = {
   id: "IMDbWatchlist",
   title: "IMDb Watchlist",
   version: "1.0.0",
   requiredVersion: "0.0.1",
   description: "通过抓取 IMDb 用户 Watchlist 页面解析 IMDb ID，无需 API Key",
   author: "huangxd",
-  site: "https://github.com/joy51744/ForwardWidgets",
+  site: "https://www.imdb.com",
   modules: [
     {
       title: "IMDb Watchlist",
@@ -17,7 +17,6 @@ WidgetMetadata = {
           name: "user_id",
           title: "用户ID",
           type: "input",
-          default: "ur204635540",  // ✅ 預設改為此 ID
           description: "IMDb 用户 ID，例如：ur12345678",
         },
         {
@@ -32,7 +31,7 @@ WidgetMetadata = {
 
 async function loadImdbWatchlist(params = {}) {
   try {
-    const userId = params.user_id || "ur204635540"; // ✅ 這裡也加了預設值（如需強制）
+    const userId = params.user_id || "";
     const page = params.page || 1;
     const count = 100;
     const minNum = (page - 1) * count + 1;
@@ -58,7 +57,7 @@ async function loadImdbWatchlist(params = {}) {
     const elements = Widget.dom.select(doc, 'a[href^="/title/tt"]');
 
     if (!elements || elements.length === 0) {
-      throw new Error("未找到任何 IMDb ID，请确认 Watchlist 是否为公开状态");
+      throw new Error("未找到任何 IMDb ID");
     }
 
     let imdbIds = Array.from(
