@@ -10,7 +10,7 @@
       "requiredVersion": "0.0.1",
       "version": "1.0.0",
       "author": "Forward",
-      "url": "https://raw.githubusercontent.com/joy51744/ForwardWidgets/refs/heads/main/widget/IMDB_watchlist.js"
-    }
+      "url": "https://raw.githubusercontent.com/joy51744/ForwardWidgets/refs/heads/main/widget/tmdbnetwork.js"
+    },
   ]
 }
