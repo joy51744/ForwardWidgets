@@ -17,6 +17,7 @@ WidgetMetadata = {
           name: "user_id",
           title: "用户ID",
           type: "input",
+          default: "ur204635540",  // ✅ 預設改為此 ID
           description: "IMDb 用户 ID，例如：ur12345678",
         },
         {
@@ -31,7 +32,7 @@ WidgetMetadata = {
 
 async function loadImdbWatchlist(params = {}) {
   try {
-    const userId = params.user_id || "";
+    const userId = params.user_id || "ur204635540"; // ✅ 這裡也加了預設值（如需強制）
     const page = params.page || 1;
     const count = 100;
     const minNum = (page - 1) * count + 1;
@@ -57,7 +58,7 @@ async function loadImdbWatchlist(params = {}) {
     const elements = Widget.dom.select(doc, 'a[href^="/title/tt"]');
 
     if (!elements || elements.length === 0) {
-      throw new Error("未找到任何 IMDb ID");
+      throw new Error("未找到任何 IMDb ID，请确认 Watchlist 是否为公开状态");
     }
 
     let imdbIds = Array.from(
