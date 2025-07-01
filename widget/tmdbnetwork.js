@@ -5,8 +5,8 @@ const US_NETWORKS = [
 ];
 
 const WidgetMetadata = {
-  id: "forward.traktWithNetworkFilterYear",
-  title: "Trakt我看 + 播放平台筛选 + 年份筛选（日/韩/美）",
+  id: "forward.traktwatchlist",
+  title: "Trakt watchlist + 地區/播放平台/年份筛选 ",
   version: "1.1.0",
   requiredVersion: "0.0.1",
   description: "基于 Trakt 和 TMDb 网页解析，支持日剧、韩剧、美剧播放平台和年份筛选，无需 API Key",
