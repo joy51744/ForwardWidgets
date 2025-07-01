@@ -48,6 +48,32 @@ WidgetMetadata = {
                     title: "页码",
                     type: "page"
                 },
+                
+                {
+                    name: "platform",
+                    title: "播放平台",
+                    type: "enumeration",
+                    enumOptions: [
+                        { title: "全部", value: "" },
+                        { title: "Netflix", value: "Netflix" },
+                        { title: "Hulu", value: "Hulu" },
+                        { title: "Amazon Prime", value: "Amazon Prime" },
+                        { title: "Disney+", value: "Disney+" },
+                        { title: "HBO", value: "HBO" },
+                        { title: "HBO Max", value: "HBO Max" },
+                        { title: "Paramount+", value: "Paramount+" },
+                        { title: "HBO", value: "HBO" },
+                        { title: "Peacock", value: "Peacock" },
+                        { title: "HBO", value: "HBO" },
+                        { title: "Starz", value: "Starz" },
+                    ],
+                    description: "筛选指定播放平台的内容",
+                },
+                {
+                    name: "page",
+                    title: "页码",
+                    type: "page",
+                },
             ],
         },
         // ... 其他模块 ...
