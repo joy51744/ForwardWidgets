@@ -1,12 +1,12 @@
 {
   "title": "Forward Widgets",
-  "description": "基于Forw​​ardWidget架构导入相关模块",
+  "description": "基于Forw​​ardWidget架构导入豆瓣自定义片单",
   "icon": "https://assets.vvebo.vip/scripts/icon.png",
   "widgets": [
     {
       "id": "forward.combined.media.lists",
       "title": "豆瓣自定义片单",
-      "description": "加载豆瓣官方榜单或用户豆列",
+      "description": "基于Forw​​ardWidget架构导入豆瓣自定义片单",
       "requiredVersion": "0.0.1",
       "version": "1.0.0",
       "author": "乔伊",
