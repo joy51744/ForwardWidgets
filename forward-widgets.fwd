@@ -1,16 +1,16 @@
 {
-  "title": "douban Forward Widgets",
-  "description": "解析豆瓣片单，获取视频信息",
+  "title": "Ma's Widgets",
+  "description": "基于Forw​​ardWidget架构导入相关模块",
   "icon": "https://assets.vvebo.vip/scripts/icon.png",
   "widgets": [
     {
-      "id": "IMDbWatchlist",
-      "title": "IMDb Watchlist",
-      "description": "获取 TMDB 的榜单数据",
+      "id": "douban",
+      "title": "豆瓣自定义片单",
+      "description": "加载豆瓣官方榜单或用户豆列",
       "requiredVersion": "0.0.1",
-      "version": "1.0.0",
-      "author": "JoyMa",
-      "url": "https://raw.githubusercontent.com/joy51744/ForwardWidgets/refs/heads/main/widget/DoubanList.js"
+      "version": "1.0.6",
+      "author": "Joy",
+      "url": "https://raw.githubusercontent.com/Ma98hao04hsin15/ForwardWidgets/refs/heads/main/widget/Douban.js"
     }
   ]
 }
