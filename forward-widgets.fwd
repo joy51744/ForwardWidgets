@@ -8,7 +8,7 @@
       "title": "豆瓣自定义片单",
       "description": "加载豆瓣官方榜单或用户豆列",
       "requiredVersion": "0.0.1",
-      "version": "1.0.6",
+      "version": "1.0.0",
       "author": "乔伊",
       "url": "https://raw.githubusercontent.com/joy51744/ForwardWidgets/refs/heads/main/widget/DoubanList.js"
     }
