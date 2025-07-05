@@ -52,60 +52,6 @@ WidgetMetadata = {
         { name: "limit", title: "🔢 每页数量", type: "constant", value: "20" }
       ]
     },
-    // =============IMDB模块=============
-    {
-      title: "IMDb Top 250 电影",
-      description: "IMDb 用户评分最高的 250 部电影",
-      requiresWebView: false,
-      functionName: "loadImdbCardItems",
-      cacheDuration: 3600,
-      params: [
-        { name: "url", 
-          title: "🔗 列表地址", 
-          type: "constant", 
-          value: "https://www.imdb.com/chart/top/?ref_=nv_mv_250" },
-        { name: "page", title: "页码", type: "page" },
-        { name: "limit", title: "🔢 每页数量", type: "constant", value: "20" }
-      ]
-    },
-    {
-      title: "IMDb Top 250 剧集",
-      description: "IMDb 用户评分最高的 250 部剧集",
-      requiresWebView: false,
-      functionName: "loadImdbCardItems",
-      cacheDuration: 3600,
-      params: [
-        { name: "url", 
-          title: "🔗 列表地址", 
-          type: "constant", 
-          value: "https://www.imdb.com/chart/toptv/?ref_=nv_tvv_250" },
-        { name: "page", title: "页码", type: "page" },
-        { name: "limit", title: "🔢 每页数量", type: "constant", value: "20" }
-      ]
-    },
-    {
-      title: "IMDB 自定义片单",
-      description: "解析 IMDB 热门电影/剧集等网页片单 (需输入 URL)",
-      requiresWebView: false,
-      functionName: "loadImdbCardItems",
-      cacheDuration: 3600,
-      params: [
-        {
-          name: "url", 
-          title: "🔗 列表地址", 
-          type: "input", 
-          description: "输入 IMDB 片单或榜单地址",
-          placeholders: [
-            { title: "时下热门电影", 
-              value: "https://www.imdb.com/chart/moviemeter/?ref_=nv_mv_mpm" },
-            { title: "时下热门剧集", 
-              value: "https://www.imdb.com/chart/tvmeter/?ref_=nv_tvv_mptv" }
-          ]
-        },
-        { name: "page", title: "页码", type: "page" },
-        { name: "limit", title: "🔢 每页数量", type: "constant", value: "20" }
-      ]
-    },
     }
   ]
 };
