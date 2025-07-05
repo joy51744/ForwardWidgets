@@ -1,6 +1,6 @@
 {
-  "title": "Forward Widgets",
-  "description": "Forward Official Widgets",
+  "title": "douban Forward Widgets",
+  "description": "解析豆瓣片单，获取视频信息",
   "icon": "https://assets.vvebo.vip/scripts/icon.png",
   "widgets": [
     {
@@ -9,8 +9,8 @@
       "description": "获取 TMDB 的榜单数据",
       "requiredVersion": "0.0.1",
       "version": "1.0.0",
-      "author": "Joy",
-      "url": "https://raw.githubusercontent.com/joy51744/ForwardWidgets/refs/heads/main/widget/trakt.js"
+      "author": "JoyMa",
+      "url": "https://raw.githubusercontent.com/joy51744/ForwardWidgets/refs/heads/main/widget/DoubanList.js"
     }
   ]
 }
