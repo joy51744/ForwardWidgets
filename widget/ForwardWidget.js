@@ -3,7 +3,7 @@ WidgetMetadata = {
   title: "豆瓣自定义片单",
   description: "基于Forw​​ardWidget架构导入豆瓣自定义片单",
   author: "乔伊",
-  site: "https://github.com/joy51744/FW-Widgets",
+  site: "",
   version: "1.0.0",
   requiredVersion: "0.0.1",
   detailCacheDuration: 60,
