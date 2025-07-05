@@ -1,7 +1,7 @@
 WidgetMetadata = {
   id: "forward.combined.media.lists",
-  title: "影视榜单",
-  description: "基于Forw​​ardWidget架构导入豆瓣相关影视模块",
+  title: "豆瓣自定义片单",
+  description: "基于Forw​​ardWidget架构导入豆瓣自定义片单",
   author: "乔伊",
   site: "https://github.com/joy51744/FW-Widgets",
   version: "1.0.0",
