@@ -78,14 +78,14 @@ WidgetMetadata = {
           type: "input", 
           description: "输入豆瓣片单或榜单地址 (subject_collection 或 doulist)",
           placeholders: [
-            { title: "一周电影口碑榜", 
-              value: "https://m.douban.com/subject_collection/movie_weekly_best" },
-            { title: "一周华语口碑剧集榜", 
-              value: "https://m.douban.com/subject_collection/tv_chinese_best_weekly" },
-            { title: "一周全球口碑剧集榜", 
-              value: "https://m.douban.com/subject_collection/tv_global_best_weekly" },
-            { title: "第97届奥斯卡 (2025)", 
-              value: "https://m.douban.com/subject_collection/EC7I7ZDRA?type=rank" }
+            { title: "柏林电影节片单", 
+              value: "https://www.douban.com/doulist/161004180/" },
+            { title: "历届奥斯卡最佳动画短片及提名", 
+              value: "https://www.douban.com/doulist/510983/" },
+            { title: "豆瓣电影【口碑榜】", 
+              value: "https://www.douban.com/doulist/30299/" },
+            { title: "医疗剧（美剧）", 
+              value: "https://www.douban.com/doulist/797148/" }
           ]
         },
         { name: "page", title: "页码", type: "page" },
