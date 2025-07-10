@@ -1,9 +1,11 @@
-// forward.imdblist.js
-
 const WidgetMetadata = {
   id: "imdbList",
   title: "IMDb 片單",
   description: "解析 IMDb 片單頁面，顯示列表內容，無需 API Key",
+  version: "1.0.0",
+  requiredVersion: "0.0.1",
+  author: "Joey",
+  site: "https://github.com/joy51744/ForwardWidgets",
   requiresWebView: false,
   cacheDuration: 3600,
   params: [
