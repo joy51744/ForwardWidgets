@@ -9,7 +9,7 @@
       "description": "解析 IMDb 片單頁面，顯示列表內容，無需 API Key",
       "requiredVersion": "0.0.1",
       "version": "1.0.0",
-      "author": "huangxd",
+      "author": "Joey",
       "url": "https://raw.githubusercontent.com/joy51744/ForwardWidgets/refs/heads/main/widgets/imdblist.js"
     },
   ]
