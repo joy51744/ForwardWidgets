@@ -1,7 +1,7 @@
 {
   "title": "Joey's ForwardWidget",
   "description": "A collection of widgets created by Joey",
-  "icon": "https://github.com/joy51744/ForwardWidgets/tree/main/icon.png",
+  "icon": "https://assets.vvebo.vip/scripts/icon.png",
   "widgets": [
     {
       "id": "imdbList",
