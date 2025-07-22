@@ -1,16 +1,25 @@
 {
-  "title": "Joey's ForwardWidget",
-  "description": "A collection of widgets created by Joey",
-  "icon": "https://assets.vvebo.vip/scripts/icon.png",
+  "title": "Joe's ForwardWidgets",
+  "description": "基於ForwardWidgets架構製作影視榜單自用合集",
+  "icon": "https://raw.githubusercontent.com/quantumultxx/ForwardWidgets/refs/heads/main/icon.PNG",
   "widgets": [
     {
-      "id": "imdbList",
-      "title": "IMDb 片單",
-      "description": "解析 IMDb 片單頁面，顯示列表內容，無需 API Key",
+      "id": "forward.combined.media.lists",
+      "title": "影视榜单",
+      "description": "获取TMDB和豆瓣的榜单",
       "requiredVersion": "0.0.1",
       "version": "1.0.0",
-      "author": "Joey",
-      "url": "https://raw.githubusercontent.com/joy51744/ForwardWidgets/refs/heads/main/widgets/imdblist.js"
+      "author": "阿米诺斯",
+      "url": "https://raw.githubusercontent.com/quantumultxx/ForwardWidgets/refs/heads/main/Widgets/Move_list.js"
+    },
+    {
+      "id": "forward.combined.media.lists",
+      "title": "影视榜单",
+      "description": "聚合豆瓣、TMDB、IMDB和Bangumi的影视动画榜单",
+      "requiredVersion": "0.0.1",
+      "version": "1.3.0",
+      "author": "阿米诺斯",
+      "url": "https://raw.githubusercontent.com/quantumultxx/ForwardWidgets/refs/heads/main/Widgets/YSBD.js"
     },
   ]
 }
